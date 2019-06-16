@@ -1,0 +1,33 @@
+syntax = "proto3";
+package grcp_demo;
+option go_package = "main";
+
+service Horizon {
+    rpc GetLots(LotSelector) returns (LotsPage);
+}
+
+message LotSelector {
+    uint64 cursor = 1;
+    uint32 limit = 2;
+}
+
+message LotPage {
+    Lot lot = 1;
+    map<uint64,Participant> participants = 2;
+}
+
+message LotsPage {
+    repeated Lot lots = 1;
+    map<uint64,Participant> participants = 2;
+}
+
+message Lot {
+    uint64 id = 1;
+    repeated uint64 participants = 2;
+}
+
+message Participant {
+    uint64 id = 1;
+    string account_id = 2;
+    uint64 lot_id = 3;
+}
